@@ -966,16 +966,15 @@ jobs:
       JULIA_PKG_SERVER_REGISTRY_PREFERENCE: eager
     steps:
       - uses: actions/checkout@v7
+      - uses: julia-actions/setup-julia@v3
+        with:
+          version: '1'
       - name: Check file existence
         id: check_files
         uses: andstor/file-existence-action@v3
         with:
           files: "docs/make.jl"
       - uses: julia-actions/cache@v3
-        if: steps.check_files.outputs.files_exists == 'true'
-      - uses: julia-actions/install-juliaup@v3
-        with:
-          channel: release
         if: steps.check_files.outputs.files_exists == 'true'
       # No `julia-buildpkg`: the docs build develops the package into `docs/` and
       # instantiates that environment, which resolves, downloads and builds
@@ -1038,16 +1037,15 @@ jobs:
       - uses: actions/checkout@v7
         with:
           ref: refs/tags/${{ matrix.tag }}
+      - uses: julia-actions/setup-julia@v3
+        with:
+          version: '1'
       - name: Check file existence
         id: check_files
         uses: andstor/file-existence-action@v3
         with:
           files: "docs/make.jl"
       - uses: julia-actions/cache@v3
-        if: steps.check_files.outputs.files_exists == 'true'
-      - uses: julia-actions/install-juliaup@v3
-        with:
-          channel: release
         if: steps.check_files.outputs.files_exists == 'true'
       # No `julia-buildpkg`: the docs build develops the package into `docs/` and
       # instantiates that environment, which resolves, downloads and builds
